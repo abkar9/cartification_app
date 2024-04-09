@@ -53,7 +53,7 @@ class PdfApi {
     //end Draw certificate image
 
     //start Draw text of name
-    page.graphics.drawString(user.HOLDER_NAME, font,
+    page.graphics.drawString(user.Name, font,
         bounds: Rect.fromLTWH(
             0, 7, page.getClientSize().width, page.getClientSize().height),
         brush: PdfSolidBrush(
@@ -66,20 +66,10 @@ class PdfApi {
             lineAlignment: PdfVerticalAlignment.middle));
     //end Draw text of name
     //start Draw text of nationality
-    page.graphics.drawString(user.COUNTRY_DESC, font,
-        bounds: Rect.fromLTWH(
-            0, 52, page.getClientSize().width, page.getClientSize().height),
-        brush: PdfSolidBrush(
-          PdfColor(0, 0, 0),
-        ),
-        format: PdfStringFormat(
-            textDirection: PdfTextDirection.rightToLeft,
-            alignment: PdfTextAlignment.right,
-            paragraphIndent: page.getClientSize().width / 6,
-            lineAlignment: PdfVerticalAlignment.middle));
+
     //end Draw text of nationality
     //start Draw text of id
-    page.graphics.drawString(user.ID_NO2, font,
+    page.graphics.drawString(user.Job_Title, font,
         bounds: Rect.fromLTWH(
             0, 52, page.getClientSize().width, page.getClientSize().height),
         brush: PdfSolidBrush(
@@ -93,43 +83,13 @@ class PdfApi {
             lineAlignment: PdfVerticalAlignment.middle));
     //end Draw text of id
     //start Draw text of Shares
-    page.graphics.drawString(user.SHARE_COUNT, font,
-        bounds: Rect.fromLTWH(
-            0, 52, page.getClientSize().width, page.getClientSize().height),
-        brush: PdfSolidBrush(
-          PdfColor(0, 0, 0),
-        ),
-        format: PdfStringFormat(
-            textDirection: PdfTextDirection.rightToLeft,
-            alignment: PdfTextAlignment.right,
-            paragraphIndent: page.getClientSize().width / 1.35,
-            lineAlignment: PdfVerticalAlignment.middle));
+
     //end Draw text of Shares
     //start Draw text of dateOfCreated Hijri
-    page.graphics.drawString(textDateOfCreatedH, font,
-        bounds: Rect.fromLTWH(
-            0, -143, page.getClientSize().width, page.getClientSize().height),
-        brush: PdfSolidBrush(
-          PdfColor(0, 0, 0),
-        ),
-        format: PdfStringFormat(
-            textDirection: PdfTextDirection.rightToLeft,
-            alignment: PdfTextAlignment.right,
-            paragraphIndent: page.getClientSize().width / 2.1,
-            lineAlignment: PdfVerticalAlignment.bottom));
+
     //end Draw text of dateOfCreated Hijri
     //start Draw text of dateOfCreated Gregorian
-    page.graphics.drawString(textDateOfCreatedG, font,
-        bounds: Rect.fromLTWH(
-            0, -143, page.getClientSize().width, page.getClientSize().height),
-        brush: PdfSolidBrush(
-          PdfColor(0, 0, 0),
-        ),
-        format: PdfStringFormat(
-            textDirection: PdfTextDirection.rightToLeft,
-            alignment: PdfTextAlignment.right,
-            paragraphIndent: page.getClientSize().width / 1.4,
-            lineAlignment: PdfVerticalAlignment.bottom));
+
     //end Draw text of dateOfCreated Gregorian
     //Save data file  .
     final List<int> bytes = await document.save();
