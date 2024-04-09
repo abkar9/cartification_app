@@ -43,7 +43,9 @@ dependencies:
   syncfusion_flutter_pdf:
   intl:
   jhijri:
-#  pdfx:
+  pdf: ^3.10.8
+
+  pdfx:
 
 dev_dependencies:
   flutter_test:

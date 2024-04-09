@@ -1,26 +1,17 @@
+import 'dart:ui';
 import 'package:certification_app/model/save_file_mobile.dart'
     if (dart.library.html) 'package:certification_app/model/save_file_web.dart';
 
 import 'package:certification_app/model/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:jhijri/jHijri.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class PdfApi {
-  Future<void> createCertificate({required UserInformation user}) async {
-    //start get Date Now
-    DateTime now = DateTime.now();
-    String textDateOfCreatedG = DateFormat('yyyy-MM-dd').format(now);
-    String textDateOfCreatedH = JHijri(fDate: DateTime.now()).toString();
-    //end get Date Now
 
-    // //dummy data name
-    // String textName = "ناصر ابكر ادم محمد";
-    // String textNationality = " السعودية";
-    // String textId = " 1020303303";
-    // String textShares = " 44030";
+  Future<List<int>> createCertificate({required UserInformation user}) async {
+    //start get Date Now
+
 
     //dummy data name
 
@@ -29,7 +20,7 @@ class PdfApi {
     //start Settings a PDF document.
     document.pageSettings.orientation = PdfPageOrientation.landscape;
     document.pageSettings.margins.all = 0;
-    document.pageSettings.size = PdfPageSize.a4;
+    document.pageSettings.size = PdfPageSize.flsa;
     //end Settings a PDF document.
 
     //Add page to the PDF
@@ -38,11 +29,11 @@ class PdfApi {
     final Size pageSize = page.getClientSize();
     //Create a custom font
     PdfFont font =
-        PdfTrueTypeFont(await _readFontData(), 22, style: PdfFontStyle.bold);
+        PdfTrueTypeFont(await _readFontData(), 25, style: PdfFontStyle.bold,);
 
     //start Draw certificate image
     page.graphics.drawImage(
-      PdfBitmap(await _readImageData('certificate.png')),
+      PdfBitmap(await _readImageData('certificate.jpeg')),
       Rect.fromLTWH(
         0,
         0,
@@ -53,50 +44,45 @@ class PdfApi {
     //end Draw certificate image
 
     //start Draw text of name
-    page.graphics.drawString(user.Name, font,
+    page.graphics.drawString(user.Job_Title, font,
         bounds: Rect.fromLTWH(
-            0, 7, page.getClientSize().width, page.getClientSize().height),
+            0, 7, page.getClientSize().width/0.98, page.getClientSize().height/0.78),
         brush: PdfSolidBrush(
           PdfColor(0, 0, 0),
         ),
         format: PdfStringFormat(
             textDirection: PdfTextDirection.rightToLeft,
             alignment: PdfTextAlignment.right,
-            paragraphIndent: page.getClientSize().width / 2,
+            paragraphIndent: page.getClientSize().width / 8,
             lineAlignment: PdfVerticalAlignment.middle));
     //end Draw text of name
     //start Draw text of nationality
 
     //end Draw text of nationality
     //start Draw text of id
-    page.graphics.drawString(user.Job_Title, font,
+    page.graphics.drawString(user.Name, font,
         bounds: Rect.fromLTWH(
-            0, 52, page.getClientSize().width, page.getClientSize().height),
+            0, 52, page.getClientSize().width, page.getClientSize().height/0.95),
         brush: PdfSolidBrush(
-          PdfColor(0, 0, 0),
+          PdfColor(194, 153, 121),
         ),
         format: PdfStringFormat(
 
             textDirection: PdfTextDirection.rightToLeft,
             alignment: PdfTextAlignment.right,
-            paragraphIndent: page.getClientSize().width / 2.25,
+            paragraphIndent: page.getClientSize().width / 8,
             lineAlignment: PdfVerticalAlignment.middle));
     //end Draw text of id
-    //start Draw text of Shares
 
-    //end Draw text of Shares
-    //start Draw text of dateOfCreated Hijri
-
-    //end Draw text of dateOfCreated Hijri
-    //start Draw text of dateOfCreated Gregorian
-
-    //end Draw text of dateOfCreated Gregorian
     //Save data file  .
     final List<int> bytes = await document.save();
     //Dispose the document.
     document.dispose();
+
     //Save and launch file.
-    await FileSaveHelper.saveAndLaunchFile(bytes, 'Certificate.pdf');
+
+    await FileSaveHelper.saveAndLaunchFile(bytes, 'Certificate.pdf',);
+    return bytes ;
   }
 
   // the method  used to read custom image from a file
@@ -110,4 +96,6 @@ class PdfApi {
     final ByteData bytes = await rootBundle.load('assets/fonts/Sakkal.ttf');
     return bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
   }
+// send pdfFile as params
+
 }
